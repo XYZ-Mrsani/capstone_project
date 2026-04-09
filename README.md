@@ -138,6 +138,6 @@ After a successful run, the following outputs are generated:
 - seaborn
 - streamlit
 
-## Author
+## Author (258744V)
 
 Project developed as part of a capstone project on predictive maintenance and RUL estimation for turbofan engines.
