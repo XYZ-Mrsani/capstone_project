@@ -1,140 +1,59 @@
 # Turbofan Engine Remaining Useful Life (RUL) Prediction System
 
-Final submission for Capstone Project **258744V**.
+This project implements an end-to-end predictive maintenance pipeline for estimating the **Remaining Useful Life (RUL)** of aircraft turbofan engines using the **NASA C-MAPSS FD001** dataset. The system includes data preprocessing, feature engineering, exploratory data analysis (EDA), baseline and advanced model training, evaluation, and a Streamlit dashboard for interactive visualization and prediction.
 
-This project implements an end-to-end predictive maintenance system for estimating the **Remaining Useful Life (RUL)** of aircraft turbofan engines using the **NASA C-MAPSS** turbofan engine degradation simulation dataset. The system includes data loading, preprocessing, feature engineering, exploratory data analysis (EDA), model training, evaluation, prediction output generation, and a Streamlit dashboard for interactive visualization.
+## Project Features
 
-## Project Overview
-
-Aircraft turbofan engines generate multivariate time-series sensor data throughout their operating life. This project uses that data to predict how many cycles remain before an engine reaches failure condition. The main objective is to support predictive maintenance by estimating engine RUL accurately and comparing multiple machine learning and deep learning models.
-
-## Key Features
-
-- Loads NASA C-MAPSS turbofan degradation datasets.
-- Supports FD001, FD002, FD003, and FD004 dataset files.
-- Performs preprocessing and feature engineering on sensor data.
-- Removes low-variance / near-constant sensors where required.
-- Generates exploratory data analysis outputs.
-- Trains and evaluates multiple RUL prediction models.
-- Saves trained models and feature column information.
-- Generates model comparison results.
-- Generates test prediction outputs.
-- Provides a Streamlit dashboard for model and prediction visualization.
-
-## Dataset
-
-The project uses the NASA C-MAPSS turbofan engine degradation simulation dataset.
-
-The `data/` folder contains:
-
-```text
-data/
-├── 6. Turbofan Engine Degradation Simulation...
-├── Damage Propagation Modeling.pdf
-├── nasa_cmapss.zip
-├── readme.txt
-├── train_FD001.txt
-├── train_FD002.txt
-├── train_FD003.txt
-├── train_FD004.txt
-├── test_FD001.txt
-├── test_FD002.txt
-├── test_FD003.txt
-├── test_FD004.txt
-├── RUL_FD001.txt
-├── RUL_FD002.txt
-├── RUL_FD003.txt
-└── RUL_FD004.txt
-```
+- Loads and processes the NASA C-MAPSS FD001 dataset
+- Performs preprocessing and feature engineering on multivariate sensor data
+- Generates exploratory data analysis (EDA) visualizations
+- Trains and evaluates four prediction models:
+  - Linear Regression
+  - Random Forest
+  - XGBoost
+  - LSTM
+- Saves trained models and evaluation outputs
+- Provides an interactive Streamlit dashboard for model comparison and engine-level analysis
 
 ## Project Structure
 
 ```text
-Capstone Project 258744V/
+project-root/
 ├── data/
-│   ├── 6. Turbofan Engine Degradation Simulation...
-│   ├── Damage Propagation Modeling.pdf
-│   ├── nasa_cmapss.zip
-│   ├── readme.txt
 │   ├── train_FD001.txt
-│   ├── train_FD002.txt
-│   ├── train_FD003.txt
-│   ├── train_FD004.txt
 │   ├── test_FD001.txt
-│   ├── test_FD002.txt
-│   ├── test_FD003.txt
-│   ├── test_FD004.txt
-│   ├── RUL_FD001.txt
-│   ├── RUL_FD002.txt
-│   ├── RUL_FD003.txt
-│   └── RUL_FD004.txt
-│
+│   └── RUL_FD001.txt
 ├── outputs/
 │   ├── eda/
 │   ├── models/
-│   ├── feature_cols.json
-│   ├── model_comparison.csv
-│   ├── system_architecture.png
-│   └── test_predictions.csv
-│
+│   └── model_comparison.csv
 ├── src/
-│   ├── dashboard.py
 │   ├── data_preprocessing.py
 │   ├── eda.py
-│   ├── models.py
+│   ├── baseline_models.py
+│   ├── advanced_models.py
+│   ├── dashboard.py
 │   └── pipeline.py
-│
-├── README.md
-└── requirements.txt
+├── requirements.txt
+└── README.md
 ```
 
-## Technologies Used
+## Prerequisites
 
-- Python
-- pandas
-- numpy
-- scikit-learn
-- XGBoost
-- TensorFlow / Keras
-- matplotlib
-- seaborn
-- Streamlit
-- joblib
+Make sure you have the following installed on your system:
+
+- Python 3.10 or higher
+- pip (Python package installer)
 
 ## Installation
 
-### 1. Clone the Repository
-
-```bash
-git clone <your-github-repository-url>
-cd "Capstone Project 258744V"
-```
-
-### 2. Create a Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-Activate the environment:
-
-For Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-For macOS / Linux:
-
-```bash
-source venv/bin/activate
-```
-
-### 3. Install Required Packages
+Navigate to the project root directory and install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+This will install all required Python libraries for the project.
 
 ## Running the Full Pipeline
 
@@ -144,92 +63,81 @@ Run the following command from the project root directory:
 python src/pipeline.py
 ```
 
-The pipeline performs the following steps:
+This command will:
 
-1. Loads the NASA C-MAPSS dataset files from the `data/` folder.
-2. Performs data preprocessing and feature engineering.
-3. Generates exploratory data analysis outputs.
-4. Trains the RUL prediction models.
-5. Evaluates model performance using regression metrics.
-6. Saves trained models inside `outputs/models/`.
-7. Saves selected feature columns to `outputs/feature_cols.json`.
-8. Saves model comparison results to `outputs/model_comparison.csv`.
-9. Saves test predictions to `outputs/test_predictions.csv`.
+1. Load the NASA C-MAPSS FD001 dataset from the `data/` directory.
+2. Perform exploratory data analysis (EDA).
+3. Preprocess the data and engineer features.
+4. Train all four models:
+   - Linear Regression
+   - Random Forest
+   - XGBoost
+   - LSTM
+5. Save EDA plots to `outputs/eda/`.
+6. Save trained models to `outputs/models/`.
+7. Save model comparison results to `outputs/model_comparison.csv`.
 
 ## Running the Dashboard
 
-After running the full pipeline, launch the Streamlit dashboard:
+After running the pipeline, launch the Streamlit dashboard with:
 
 ```bash
 python -m streamlit run src/dashboard.py
 ```
 
-If the browser does not open automatically, open:
+Your browser should automatically open the dashboard. If it does not, open the following URL manually:
 
 ```text
 http://localhost:8501
 ```
 
+## Dashboard Pages
+
+The dashboard includes the following sections:
+
+- **Home**  
+  View a summary of the project and dataset.
+
+- **Engine Analysis**  
+  Select a specific test engine to view its sensor behavior and predicted RUL from each model.
+
+- **Model Comparison**  
+  Compare the performance metrics of all trained models side by side.
+
+- **EDA Visualizations**  
+  Browse the charts and plots generated during exploratory data analysis.
+
 ## Output Files
 
-After a successful run, the project generates the following outputs:
+After a successful run, the following outputs are generated:
 
-```text
-outputs/
-├── eda/
-├── models/
-├── feature_cols.json
-├── model_comparison.csv
-├── system_architecture.png
-└── test_predictions.csv
-```
+- `outputs/eda/`  
+  Contains exploratory data analysis visualizations and plots.
 
-### Output Description
+- `outputs/models/`  
+  Contains the saved trained models.
 
-| Output | Description |
-|---|---|
-| `outputs/eda/` | Contains exploratory data analysis charts and visualizations. |
-| `outputs/models/` | Contains trained and saved machine learning / deep learning models. |
-| `outputs/feature_cols.json` | Stores the final selected feature columns used by the models. |
-| `outputs/model_comparison.csv` | Stores the evaluation summary of all trained models. |
-| `outputs/test_predictions.csv` | Stores predicted RUL values for test engines. |
-| `outputs/system_architecture.png` | Shows the system architecture diagram used in the project. |
-
-## Model Evaluation
-
-The system compares model performance using standard RUL prediction evaluation metrics such as:
-
-- RMSE
-- MAE
-- R² Score
-- NASA asymmetric scoring function, where applicable
-
-The model comparison results are saved in:
-
-```text
-outputs/model_comparison.csv
-```
-
-## Dashboard Functionality
-
-The Streamlit dashboard provides an interactive interface to review the project outputs. It can be used to:
-
-- View overall project summary.
-- Explore generated EDA visualizations.
-- Compare model evaluation results.
-- Review predicted RUL values.
-- Analyse model outputs using saved result files.
+- `outputs/model_comparison.csv`  
+  Contains the evaluation summary for all models.
 
 ## Notes
 
-- Ensure all required dataset files are available inside the `data/` folder before running the pipeline.
-- Run `python src/pipeline.py` before opening the dashboard.
-- The dashboard depends on files generated inside the `outputs/` folder.
-- LSTM/deep learning training may take longer depending on system performance.
-- If package installation fails, check the Python version and install compatible library versions from `requirements.txt`.
+- Make sure the NASA C-MAPSS FD001 dataset files are placed correctly inside the `data/` directory before running the pipeline.
+- Run the full pipeline before opening the dashboard so that the required models and output files are available.
+- Depending on your hardware, LSTM training may take longer than the other models.
 
-## Author
+## Technologies Used
 
-**258744V**
+- Python
+- pandas
+- numpy
+- scikit-learn
+- xgboost
+- tensorflow / keras
+- matplotlib
+- seaborn
+- streamlit
 
-Capstone project on predictive maintenance and Remaining Useful Life prediction for turbofan engines.
+## Author (258744V)
+
+Project developed as part of a capstone project on predictive maintenance and RUL estimation for turbofan engines.
